@@ -17,7 +17,7 @@ service.interceptors.response.use(
     const { data, msg, code } = response.data;
     //后端接口没有规范输出时，输出默认值
     if (code === undefined) return response.data;
-    if (code === "10000" || code === "1") {
+    if (code == 10000 || code == 1) {
       return data;
     } else {
       ElMessage.error(msg);

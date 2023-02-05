@@ -1,20 +1,92 @@
 <template>
+  <el-row>
+    <el-col class="backgroundImg">
+      <el-col :span="6" :offset="13">
+        <img
+          src="../assets/img/ad.png"
+          style="position: absolute; left: 0; top: 0; z-index: 2"
+        />
+        <div class="wave">
+          <img src="../assets/img/wave1.png" class="wave1" />
+          <img src="../assets/img/wave2.png" class="wave2" />
+        </div>
+        <img src="../assets/img/img11.png" class="img11" />
+        <div
+          style="
+            width: 400px;
+            height: 400px;
+            background-color: #ffffff;
+            margin-top: 17vh;
+            z-index: 9999;
+            border-radius: 10px;
+            position: relative;
+          "
+        >
+          <el-col :span="24" style="height: 100px"></el-col>
+          <el-col :span="22">
+            <el-form ref="form" :model="form" label-width="80px">
+              <el-form-item label="账号">
+                <el-input
+                  @keyup.enter="onSubmit"
+                  v-model="form.username"
+                ></el-input>
+              </el-form-item>
+              <el-form-item label="密码">
+                <el-input
+                  type="password"
+                  @keyup.enter="onSubmit"
+                  v-model="form.password"
+                ></el-input>
+              </el-form-item>
+              <el-form-item>
+                <el-button type="primary" @click="onSubmit">登录</el-button>
+              </el-form-item>
+            </el-form>
+          </el-col>
+        </div>
+      </el-col>
+    </el-col>
+  </el-row>
 </template>
-
 <script>
 import { defineComponent } from "vue";
 import service from "../config/service";
+import { api } from "@/config/api";
+import router from "@/router";
+
 export default defineComponent({
   data() {
     return {
+      form: {},
+      rules: [],
     };
   },
   methods: {
+    onSubmit() {
+      service
+        .post(api.user.login, null, {
+          params: this.form,
+          withCredentials: true,
+        })
+        .then(() => {
+          router.push("/home");
+        })
+        .catch((err) => {
+          console.log(err);
+          this.$message.error("登录失败：" + err);
+        });
+    },
   },
 });
 </script>
 
 <style scoped>
+.backgroundImg {
+  height: 100vh;
+  margin: 0;
+  background-image: url(../assets/img/bg.jpg);
+}
+
 .wave {
   overflow: hidden;
   width: 100vw;

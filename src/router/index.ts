@@ -7,10 +7,11 @@ const router = createRouter({
     {
       path: "/login",
       name: "login",
+      alias: "/",
       component: Login,
     },
     {
-      path: "/",
+      path: "/home",
       name: "home",
       component: HomeView,
     },

@@ -19,10 +19,10 @@ export default defineConfig({
     minify: "terser", // 混淆器，terser构建后文件体积更小
   },
   server: {
-    host: "8082",
+    port: 8082,
     proxy: {
       "/api": {
-        target: "http://localhost:8800",
+        target: "http://localhost:8084",
         changeOrigin: true,
         rewrite: (path) => path.replace(/^\/api/, ""),
       },

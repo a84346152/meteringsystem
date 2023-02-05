@@ -9,10 +9,6 @@ module.exports = {
     '@vue/eslint-config-typescript',
     '@vue/eslint-config-prettier'
   ],
-  rules: {
-    //关闭组件命名规则
-    "vue/multi-word-component-names":"off",
-  },
   overrides: [
     {
       files: [
@@ -21,7 +17,13 @@ module.exports = {
       'extends': [
         'plugin:cypress/recommended'
       ]
-    }
+    },
+    {
+      files: ['src/views/index.vue','src/views/**/index.vue'],   // 匹配views和二级目录中的index.vue
+      rules: {
+        'vue/multi-word-component-names':"off",
+      } //给上面匹配的文件指定规则
+    },
   ],
   parserOptions: {
     ecmaVersion: 'latest'
