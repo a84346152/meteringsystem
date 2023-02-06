@@ -30,8 +30,7 @@
           </el-sub-menu>
           <el-menu-item index="2">
             消息中心
-            <el-badge value="new" class="item">
-            </el-badge>
+            <el-badge value="new" class="item"> </el-badge>
           </el-menu-item>
           <div class="flex-grow" />
           <el-sub-menu index="3">
@@ -61,7 +60,8 @@
               :index="'' + item.id"
             >
               <template #title>
-                <i :class="item.icon"></i>
+                <component class="icons" :is="item.icon"></component>
+<!--                <i :class="item.icon"></i>-->
                 <span>{{ item.permissionName }}</span>
               </template>
               <el-menu-item-group>
@@ -98,11 +98,12 @@
             padding: 10px 0 5px;
           "
         >
-          <iframe
-            name="iframe"
-            width="99.5%"
-            height="100%"
-          ></iframe>
+<!--          <iframe-->
+<!--            name="iframe"-->
+<!--            width="99.5%"-->
+<!--            height="100%"-->
+<!--          ></iframe>-->
+          <RouterView />
         </div>
       </el-main>
     </el-container>
@@ -126,7 +127,7 @@ export default defineComponent({
       menu,
       user: {},
       permission: [],
-      resources: {}
+      resources: {},
     };
   },
   created() {
@@ -135,14 +136,14 @@ export default defineComponent({
     this.getUserMsg();
   },
   methods: {
-    handleSelect() {
-    },
-    jump: function(data: any) {
+    handleSelect() {},
+    jump: function (data: any) {
       const b = data.href.lastIndexOf("?");
       if (b === -1) {
         window.open(data.href + "?permissionId=" + data.id, data.target);
       } else {
-        window.open(data.href + "&permissionId=" + data.id, data.target);
+        router.push("/entrustArray");
+        // window.open(data.href + "&permissionId=" + data.id, data.target);
       }
     },
     loginOut() {
@@ -151,7 +152,7 @@ export default defineComponent({
           api.user.loginOut,
           {},
           {
-            withCredentials: true
+            withCredentials: true,
           }
         )
         .then(() => router.push("login"))
@@ -186,8 +187,8 @@ export default defineComponent({
           this.resources = data.resources;
         })
         .catch((err) => ElMessage.error(err));
-    }
-  }
+    },
+  },
 });
 </script>
 <style>
@@ -202,7 +203,7 @@ export default defineComponent({
   overflow-x: hidden;
 }
 
-.el-menu-item.is-active .el-link{
+.el-menu-item.is-active .el-link {
   color: #409eff !important;
 }
 
@@ -225,5 +226,4 @@ export default defineComponent({
 .el-badge__content {
   border: 1px solid transparent;
 }
-
 </style>

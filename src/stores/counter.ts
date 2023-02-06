@@ -619,6 +619,87 @@ export const useCounterStore = defineStore("counter", () => {
       },
     },
   });
-  return { store };
+
+  /**
+   * 时间格式化
+   */
+  const dateFormat = function (time: string) {
+    let subDate;
+    if (time != "" && time != null) {
+      subDate = time.substring(0, 10);
+    }
+    return subDate;
+  };
+  /**
+   * 区域编码转换
+   */
+  const areaCodeFormat = function (code: any) {
+    const areaCode = store.areaCode;
+    for (let i = 0; i < areaCode.length; i++) {
+      if (code == areaCode[i].value) {
+        return areaCode[i].label;
+      }
+    }
+  };
+  /**
+   * 获取委托单类别
+   * @param {Object} type
+   */
+  const orderCategoryFormat = function(type) {
+    let t = "";
+    if (type == "FrontReception") {
+      t = "前台委托";
+    } else if (type == "Subcontract") {
+      t = "分包委托";
+    } else if (type == "SiteVerification") {
+      t = "现场检定";
+    }
+    return t;
+  }
+  /**
+   * @param {Object} obj
+   * 委托单状态转换
+   */
+  const orderStatusFormat = function(status) {
+    if (status == 'Uploaded') {
+      return "<span class='error-color'>未提交</span>";
+    } else if (status == 'Submitted') {
+      return "<span class='success-color'>已提交</span>";
+    } else if (status == 'Rejected') {
+      return "<span >作废</span>";
+    } else {
+      return "";
+    }
+  }
+  const commissionSourceFormat = function(type) {
+    var t = "";
+    switch (type) {
+      case 'Online':
+        t = '收发室受理';
+        break;
+      case 'Onsite':
+        t = '现场受理';
+        break;
+      case 'Tanker':
+        t = '加油机客户端';
+        break;
+      case 'Electronic':
+        t = '电子客户端';
+        break;
+      case 'Medicalization':
+        t = '医化客户端';
+        break;
+      case 'ECQS':
+        t = 'ECQS';
+        break;
+      case 'Zhelijian':
+        t = '浙里检';
+        break;
+      default:
+        break;
+    }
+    return t;
+  }
+  return { store, dateFormat, areaCodeFormat,orderCategoryFormat ,orderStatusFormat,commissionSourceFormat};
   // return { count, doubleCount, increment };
 });
